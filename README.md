@@ -63,13 +63,6 @@ A modern, responsive portfolio website showcasing AI & Machine Learning expertis
 4. **Update social media links** with your profiles
 5. **Add project screenshots** for visual appeal
 
-## 🌐 Deployment Ready
-
-This portfolio is ready for deployment on:
-- GitHub Pages
-- Netlify
-- Vercel
-- Traditional web hosting
 
 ---
 
