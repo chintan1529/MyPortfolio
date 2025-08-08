@@ -1,6 +1,6 @@
 # Chintan Chhajed - Enhanced AI Portfolio
 
-A modern, responsive portfolio website showcasing AI & Machine Learning expertise with a focus on YOLOv8 object detection and computer vision.
+A modern, responsive portfolio website showcasing AI & Machine Learning expertise.
 
 ## 🚀 Featured Project
 
