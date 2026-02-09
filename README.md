@@ -48,20 +48,6 @@ A modern, responsive portfolio website showcasing AI & Machine Learning expertis
 3. **SobberConnect**: Recovery assistance platform
 4. **Weather Forecast App**: Real-time weather data
 
-## 🚀 Quick Start
-
-1. Download all files to a folder
-2. Open `index.html` in your browser
-3. Customize with your actual project links
-4. Deploy to your preferred hosting platform
-
-## 🎨 Customization Guide
-
-1. **Update project links** in the projects section
-2. **Add your email** in the contact section
-3. **Modify the hero description** to match your focus
-4. **Update social media links** with your profiles
-5. **Add project screenshots** for visual appeal
 
 
 ---
