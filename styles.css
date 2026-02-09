@@ -306,10 +306,11 @@ body.dark-mode .hamburger span {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 800;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    line-height: 1.15;
+    letter-spacing: -1px;
 }
 
 .hero-title .word {
@@ -317,7 +318,7 @@ body.dark-mode .hamburger span {
 }
 
 .hero-title .gradient-text {
-    background: linear-gradient(45deg, #FFD700, #FFA500);
+    background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -334,10 +335,12 @@ body.dark-mode .hamburger span {
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
     opacity: 0.95;
+    letter-spacing: 0.5px;
+}
     min-height: 3rem;
 }
 
@@ -352,10 +355,12 @@ body.dark-mode .hamburger span {
 }
 
 .hero-description {
-    font-size: 1.15rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.92;
     line-height: 1.8;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .hero-buttons {
@@ -379,26 +384,31 @@ body.dark-mode .hamburger span {
 }
 
 .btn-primary {
-    background: white;
-    color: var(--primary);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
 }
 
 .btn-secondary {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.15);
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.25);
     border-color: white;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 }
 
 .btn-submit {
@@ -540,46 +550,52 @@ body.dark-mode .hamburger span {
    SECTION STYLES
    ============================================ */
 section {
-    padding: 100px 0;
+    padding: 120px 20px;
     position: relative;
     z-index: 1;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
+    animation: fadeInDown 0.8s ease;
 }
 
 .section-title {
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     position: relative;
     display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .section-title::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--gradient-main);
-    border-radius: 2px;
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    border-radius: 3px;
 }
 
 .section-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #666;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    font-weight: 500;
+    line-height: 1.6;
 }
 
 body.dark-mode .section-subtitle {
-    color: #a0a0a0;
+    color: #b0b0b0;
 }
 
 /* ============================================
@@ -878,10 +894,46 @@ body.dark-mode .filter-btn {
     animation: fadeInUp 0.6s ease;
 }
 
+.project-card.featured-card {
+    grid-column: span 1;
+    border: 2px solid var(--primary);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+    position: relative;
+    overflow: visible;
+}
+
+.project-card.featured-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.1), transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.featured-tag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 8px 16px !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
 body.dark-mode .project-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .project-card.featured-card {
+    border: 2px solid rgba(102, 126, 234, 0.6);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
 }
 
 @keyframes fadeInUp {
@@ -931,16 +983,18 @@ body.dark-mode .project-card {
 }
 
 .project-content {
-    padding: 2rem;
+    padding: 2.5rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 .project-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
     color: #333;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 body.dark-mode .project-content h3 {
@@ -949,10 +1003,11 @@ body.dark-mode .project-content h3 {
 
 .project-desc {
     color: #666;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
     flex: 1;
+    font-weight: 500;
 }
 
 body.dark-mode .project-desc {

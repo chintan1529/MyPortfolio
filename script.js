@@ -154,11 +154,11 @@ function updateActiveNavLink() {
 const typingText = document.querySelector('.typing-text');
 if (typingText) {
     const phrases = [
-        'AI & Machine Learning Developer',
-        'Computer Vision Specialist',
-        'Deep Learning Enthusiast',
-        'YOLOv8 Expert',
-        'Neural Network Builder'
+        'Full-Stack Developer',
+        'AI & Machine Learning Specialist',
+        'Full-Stack Web Developer',
+        'Computer Vision Expert',
+        'End-to-End Solution Builder'
     ];
     
     let currentPhrase = 0;
