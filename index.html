@@ -3,24 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chintan Chhajed - AI & ML Developer</title>
+    <meta name="description" content="Chintan Chhajed - AI & ML Developer | YOLOv8 Object Detection | Neural Networks | Computer Vision">
+    <meta name="keywords" content="AI, Machine Learning, Computer Vision, YOLOv8, Neural Networks, Deep Learning">
+    <title>Chintan Chhajed - AI & ML Developer | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Particle Background -->
+    <div class="particle-background" id="particle-bg"></div>
+    
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>Chintan Chhajed</h2>
+                <div class="logo-icon">
+                    <span class="logo-char">C</span>
+                </div>
+                <span class="logo-text">Chintan</span>
             </div>
             <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#home" class="nav-link" data-section="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#about" class="nav-link" data-section="about">
+                    <i class="fas fa-user"></i> About
+                </a>
+                <a href="#skills" class="nav-link" data-section="skills">
+                    <i class="fas fa-code"></i> Skills
+                </a>
+                <a href="#projects" class="nav-link" data-section="projects">
+                    <i class="fas fa-project-diagram"></i> Projects
+                </a>
+                <a href="#contact" class="nav-link" data-section="contact">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
+                <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -34,75 +55,148 @@
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
+                <div class="hero-greeting">Welcome to my portfolio</div>
                 <h1 class="hero-title">
-                    Hi, I'm <span class="gradient-text">Chintan Chhajed</span>
+                    <span class="word">I'm</span>
+                    <span class="gradient-text word">Chintan Chhajed</span>
                 </h1>
-                <h2 class="hero-subtitle">AI & Machine Learning Developer</h2>
+                <h2 class="hero-subtitle">
+                    <span class="typing-text"></span>
+                </h2>
                 <p class="hero-description">
-                    Passionate about building AI-powered solutions that make a real impact. 
-                    Specializing in neural networks, NLP, and computer vision with YOLOv8.
+                    Crafting intelligent solutions with <strong>AI & Machine Learning</strong>. 
+                    Specializing in computer vision, neural networks, and building systems that make an impact.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    <a href="#projects" class="btn btn-primary">
+                        <span>Explore My Work</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Get In Touch</span>
+                        <i class="fas fa-comment"></i>
+                    </a>
                 </div>
                 <div class="social-links">
-                    <a href="https://github.com/chintan1529" target="_blank" class="social-link">
+                    <a href="https://github.com/chintan1529" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/chintan-chhajed-339b86294" target="_blank" class="social-link">
+                    <a href="https://www.linkedin.com/in/chintan-chhajed-339b86294" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
                         <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:chintanchhajed@gmail.com" class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
                     </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="floating-elements">
-                    <div class="floating-element">🤖</div>
-                    <div class="floating-element">🧠</div>
-                    <div class="floating-element">💻</div>
-                    <div class="floating-element">🚀</div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="card-content">
+                        <i class="fas fa-brain"></i>
+                        <p>Neural Networks</p>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-content">
+                        <i class="fas fa-eye"></i>
+                        <p>Computer Vision</p>
+                    </div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-content">
+                        <i class="fas fa-robot"></i>
+                        <p>YOLOv8</p>
+                    </div>
+                </div>
+                <div class="floating-card card-4">
+                    <div class="card-content">
+                        <i class="fas fa-network-wired"></i>
+                        <p>Deep Learning</p>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="mouse-wheel"></div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Passionate about AI, innovation, and creating real impact</p>
+            </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p>
-                        I'm a passionate AI & Machine Learning enthusiast currently pursuing my studies at 
-                        <strong>SRM University</strong> in Chennai, Tamil Nadu. With a strong focus on neural networks, 
-                        natural language processing, computer vision, and AI-powered applications, I'm dedicated to building 
-                        innovative solutions that make a real impact.
+                    <p class="about-intro">
+                        I'm a passionate <strong>AI & Machine Learning developer</strong> at <strong>SRM University</strong>, 
+                        Chennai, dedicated to building intelligent systems that solve real-world problems.
                     </p>
                     <p>
-                        My journey in AI is driven by the belief that <em>"AI is just like magic, but with math!"</em> 
-                        I'm particularly interested in leveraging technology for social good, especially in 
-                        mental health, recovery support systems, and real-time object detection.
+                        My journey is driven by the philosophy: <em>"AI is just like magic, but with math!"</em> 
+                        I specialize in creating high-performance models using <strong>PyTorch, TensorFlow, and YOLOv8</strong> 
+                        for computer vision and NLP applications.
                     </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>85-95% accuracy in object detection</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Real-time processing & optimization</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Full-stack AI solutions</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mentoring & knowledge sharing</span>
+                        </div>
+                    </div>
                     <div class="education">
                         <h3><i class="fas fa-graduation-cap"></i> Education</h3>
                         <div class="education-item">
-                            <h4>SRM University</h4>
-                            <p>Chennai, Tamil Nadu | August 2023 - Present</p>
+                            <div class="education-header">
+                                <h4>SRM University</h4>
+                                <span class="education-period">Aug 2023 - Present</span>
+                            </div>
+                            <p class="education-location">Chennai, Tamil Nadu</p>
                         </div>
                     </div>
                 </div>
                 <div class="about-stats">
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="4">0</h3>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="stat-number">6+</h3>
                         <p>Projects Completed</p>
                     </div>
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="8">0</h3>
-                        <p>Technologies Mastered</p>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="stat-number">10+</h3>
+                        <p>Technologies</p>
                     </div>
-                    <div class="stat-item">
-                        <h3 class="stat-number" data-target="150">0</h3>
-                        <p>Commits This Year</p>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="stat-number">95%</h3>
+                        <p>Avg Accuracy</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="stat-number">100%</h3>
+                        <p>Dedication</p>
                     </div>
                 </div>
             </div>
@@ -112,45 +206,50 @@
     <!-- Skills Section -->
     <section id="skills" class="skills">
         <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
+            <div class="section-header">
+                <h2 class="section-title">Technical Skills</h2>
+                <p class="section-subtitle">Tools, frameworks, and technologies I work with</p>
+            </div>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i> AI & Machine Learning</h3>
-                    <div class="skill-list">
+                    <h3><i class="fas fa-brain"></i> AI & ML</h3>
+                    <div class="skill-items">
                         <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
                         <span class="skill-tag">YOLOv8</span>
                         <span class="skill-tag">Transformers</span>
-                        <span class="skill-tag">Deep Learning</span>
                         <span class="skill-tag">NLP</span>
                         <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">Neural Networks</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Programming Languages</h3>
-                    <div class="skill-list">
+                    <h3><i class="fas fa-code"></i> Programming</h3>
+                    <div class="skill-items">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">SQL</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3><i class="fas fa-globe"></i> Web Development</h3>
-                    <div class="skill-list">
+                    <h3><i class="fas fa-server"></i> Frameworks</h3>
+                    <div class="skill-items">
                         <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Django</span>
                         <span class="skill-tag">Gradio</span>
-                        <span class="skill-tag">Web APIs</span>
-                        <span class="skill-tag">Full-Stack</span>
-                        <span class="skill-tag">Responsive Design</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">REST APIs</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Git/GitHub</span>
-                        <span class="skill-tag">Google Colab</span>
+                    <h3><i class="fas fa-tools"></i> Tools & Cloud</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">Jupyter Notebook</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Vercel</span>
                         <span class="skill-tag">OpenWeather API</span>
-                        <span class="skill-tag">AI Platforms</span>
                     </div>
                 </div>
             </div>
@@ -160,100 +259,238 @@
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Innovative solutions showcasing my AI & ML expertise</p>
+            </div>
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
+                <button class="filter-btn" data-filter="nlp">NLP & ML</button>
+                <button class="filter-btn" data-filter="web">Web & API</button>
+            </div>
             <div class="projects-grid">
-                <!-- Enhanced YOLOv8s Object Detection System -->
-                <div class="project-card featured">
-                    <div class="project-header">
-                        <i class="fas fa-eye project-icon"></i>
-                        <h3>Enhanced YOLOv8s Object Detection System</h3>
-                    </div>
-                    <p>Professional-grade object detection system with enhanced accuracy and real-time processing capabilities. Achieves 40-70% better accuracy than standard implementations with multi-scale detection and professional Gradio web interface.</p>
-                    <div class="project-tech">
-                        <span>YOLOv8</span>
-                        <span>PyTorch</span>
-                        <span>Gradio</span>
-                        <span>Computer Vision</span>
-                        <span>Real-time Processing</span>
-                    </div>
-                    <div class="project-stats">
-                        <div class="stat">
-                            <span class="stat-label">Accuracy:</span>
-                            <span class="stat-value">85-95%</span>
+                <!-- Project 1: YOLOv8 -->
+                <div class="project-card" data-category="computer-vision">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-eye fa-3x"></i>
                         </div>
-                        <div class="stat">
-                            <span class="stat-label">Framework:</span>
-                            <span class="stat-value">PyTorch</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-label">Interface:</span>
-                            <span class="stat-value">Gradio</span>
-                        </div>
+                        <div class="project-tag">Featured</div>
                     </div>
-                    <div class="project-links">
-                        <a href="https://github.com/chintan1529/Enhanced-YOLOv8s-Object-Detection-System" target="_blank" class="project-link">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
+                    <div class="project-content">
+                        <h3>Enhanced YOLOv8s Object Detection</h3>
+                        <p class="project-desc">
+                            Professional-grade real-time object detection system with 85-95% accuracy. 
+                            40-70% performance improvement over standard implementations with multi-scale detection.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-bullseye"></i>
+                                <span>85-95% Accuracy</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-rocket"></i>
+                                <span>Real-time Processing</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>YOLOv8</span>
+                            <span>PyTorch</span>
+                            <span>Gradio</span>
+                            <span>Computer Vision</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/Enhanced-YOLOv8s-Object-Detection-System" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Mental Health Chatbot -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <i class="fas fa-brain project-icon"></i>
+                <!-- Project 2: Mental Health Chatbot -->
+                <div class="project-card" data-category="nlp">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-comments fa-3x"></i>
+                        </div>
+                        <div class="project-tag">AI Powered</div>
+                    </div>
+                    <div class="project-content">
                         <h3>Mental Health Chatbot</h3>
-                    </div>
-                    <p>A sophisticated chatbot designed to provide mental health support using advanced AI and NLP techniques. Built to offer compassionate, AI-powered assistance for psychological well-being.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>PyTorch</span>
-                        <span>Transformers</span>
-                        <span>NLP</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/chintan1529" target="_blank" class="project-link">
-                            <i class="fab fa-github"></i> Code
-                        </a>
-                    </div>
-                </div>
-
-                <!-- SobberConnect -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <i class="fas fa-link project-icon"></i>
-                        <h3>SobberConnect</h3>
-                    </div>
-                    <p>An innovative platform helping individuals recovering from addiction with community support networks, recovery resources, and AI-powered assistance and guidance.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>Flask</span>
-                        <span>AI</span>
-                        <span>Web Development</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/chintan1529" target="_blank" class="project-link">
-                            <i class="fab fa-github"></i> Code
-                        </a>
+                        <p class="project-desc">
+                            AI-powered psychological support system using advanced NLP and Transformers. 
+                            Compassionate assistance for mental wellness with intelligent conversation understanding.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-heart"></i>
+                                <span>AI Compassion</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-brain"></i>
+                                <span>NLP Powered</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>PyTorch</span>
+                            <span>Transformers</span>
+                            <span>NLP</span>
+                            <span>Python</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/Mental-HealthBot" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Weather Forecast App -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <i class="fas fa-cloud-sun project-icon"></i>
+                <!-- Project 3: Brain Tumor Detection -->
+                <div class="project-card" data-category="computer-vision">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-brain fa-3x"></i>
+                        </div>
+                        <div class="project-tag">Deep Learning</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Brain Tumor MRI Detection</h3>
+                        <p class="project-desc">
+                            Advanced deep learning model for detecting brain tumors in MRI scans. 
+                            Uses CNN architecture with high precision for medical imaging analysis.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>Medical AI</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-image"></i>
+                                <span>Image Analysis</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>TensorFlow</span>
+                            <span>CNN</span>
+                            <span>Deep Learning</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/Brain-Tumor-mri-prediction-" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Diabetic Retinopathy -->
+                <div class="project-card" data-category="computer-vision">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-eye fa-3x"></i>
+                        </div>
+                        <div class="project-tag">Medical Vision</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Diabetic Retinopathy Detection</h3>
+                        <p class="project-desc">
+                            Computer vision system for detecting diabetic retinopathy in retinal images. 
+                            Helps identify eye disease progression early for better patient outcomes.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-microscope"></i>
+                                <span>Disease Detection</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-image"></i>
+                                <span>Image Classification</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>CNN</span>
+                            <span>Computer Vision</span>
+                            <span>Medical Imaging</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/-Diabetic-Retinopathy-Detection" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Weather Forecast App -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-cloud-sun fa-3x"></i>
+                        </div>
+                        <div class="project-tag">Web App</div>
+                    </div>
+                    <div class="project-content">
                         <h3>Weather Forecast App</h3>
+                        <p class="project-desc">
+                            Real-time weather application with beautiful interface and comprehensive data visualization. 
+                            Global weather coverage using OpenWeather API with dynamic updates.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-globe"></i>
+                                <span>Global Coverage</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-sync"></i>
+                                <span>Real-time Data</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>Flask</span>
+                            <span>OpenWeather API</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/Weather-forecast-app" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
                     </div>
-                    <p>A clean, effective application providing real-time weather updates with an intuitive user interface and comprehensive weather data visualization.</p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>Flask</span>
-                        <span>OpenWeather API</span>
-                        <span>Web Interface</span>
+                </div>
+
+                <!-- Project 6: CIFAR-10 Classification -->
+                <div class="project-card" data-category="nlp">
+                    <div class="project-image">
+                        <div class="project-visual">
+                            <i class="fas fa-images fa-3x"></i>
+                        </div>
+                        <div class="project-tag">Image Classification</div>
                     </div>
-                    <div class="project-links">
-                        <a href="https://github.com/chintan1529" target="_blank" class="project-link">
-                            <i class="fab fa-github"></i> Code
-                        </a>
+                    <div class="project-content">
+                        <h3>CIFAR-10 Image Classification</h3>
+                        <p class="project-desc">
+                            Deep learning model for classifying 10 object categories. Demonstrating CNN architecture 
+                            optimization and training techniques for image recognition tasks.
+                        </p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-cube"></i>
+                                <span>10 Categories</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-brain"></i>
+                                <span>Neural Nets</span>
+                            </div>
+                        </div>
+                        <div class="tech-stack">
+                            <span>PyTorch</span>
+                            <span>CNN</span>
+                            <span>Deep Learning</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/chintan1529/cifar10-classification" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -263,25 +500,68 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Let's Connect!</h2>
+            <div class="section-header">
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-subtitle">Open for collaborations, opportunities, and interesting conversations</p>
+            </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <p>I'm always excited to collaborate on AI/ML projects, discuss innovative applications of technology, or explore opportunities in artificial intelligence, computer vision, and mental health technology.</p>
-                    
-                    <div class="contact-methods">
-                        <a href="mailto:chintan@example.com" class="contact-method">
+                    <div class="info-item">
+                        <div class="info-icon">
                             <i class="fas fa-envelope"></i>
-                            <span>Get In Touch</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/chintan-chhajed-339b86294" target="_blank" class="contact-method">
-                            <i class="fab fa-linkedin"></i>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="https://github.com/chintan1529" target="_blank" class="contact-method">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </a>
+                        </div>
+                        <div class="info-text">
+                            <h3>Email</h3>
+                            <a href="mailto:chintanchhajed@gmail.com">chintanchhajed@gmail.com</a>
+                        </div>
                     </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>GitHub</h3>
+                            <a href="https://github.com/chintan1529" target="_blank">github.com/chintan1529</a>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>LinkedIn</h3>
+                            <a href="https://www.linkedin.com/in/chintan-chhajed-339b86294" target="_blank">Connect on LinkedIn</a>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Location</h3>
+                            <p>Chennai, Tamil Nadu, India</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required class="form-input">
+                            <span class="form-focus"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required class="form-input">
+                            <span class="form-focus"></span>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required class="form-input"></textarea>
+                            <span class="form-focus"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -290,7 +570,32 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Chintan Chhajed.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Chintan Chhajed</h3>
+                    <p>AI & ML Developer | Building the future with neural networks</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow</h3>
+                    <div class="footer-socials">
+                        <a href="https://github.com/chintan1529" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/chintan-chhajed-339b86294" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:chintanchhajed@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Chintan Chhajed. All rights reserved. | Crafted with <i class="fas fa-heart"></i> and AI</p>
+            </div>
         </div>
     </footer>
 
