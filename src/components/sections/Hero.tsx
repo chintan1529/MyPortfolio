@@ -8,10 +8,11 @@ import { personalInfo } from "@/lib/data";
 export default function Hero() {
   const [videoAvailable, setVideoAvailable] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Detect prefers-reduced-motion on mount to avoid hydration mismatch
+    // Detect prefers-reduced-motion
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(motionQuery.matches);
 
@@ -24,48 +25,75 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (prefersReducedMotion) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play().catch(() => {
-          // Autoplay gracefully handled if browser policy restricts
-        });
-      }
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Critical browser autoplay compatibility: explicitly enforce muted DOM properties
+    video.muted = true;
+    video.defaultMuted = true;
+
+    if (prefersReducedMotion) {
+      video.pause();
+      return;
     }
+
+    const startPlayback = async () => {
+      try {
+        await video.play();
+        setIsPlaying(true);
+      } catch (err) {
+        console.warn("Hero video autoplay deferred or blocked:", err);
+      }
+    };
+
+    // If video is already ready or when it can play, trigger playback
+    if (video.readyState >= 2) {
+      startPlayback();
+    } else {
+      video.addEventListener("loadeddata", startPlayback, { once: true });
+      video.addEventListener("canplay", startPlayback, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener("loadeddata", startPlayback);
+      video.removeEventListener("canplay", startPlayback);
+    };
   }, [prefersReducedMotion]);
 
   return (
     <section className="relative min-h-screen w-full flex flex-col justify-between px-6 md:px-12 lg:px-20 pt-28 pb-12 overflow-hidden bg-[#050505]">
       {/* ========================================================================= */}
-      {/* BACKGROUND LAYER (Full-viewport video with dark overlay)                 */}
+      {/* BACKGROUND LAYER (Full-viewport HTML5 Video with dark overlay)           */}
       {/* ========================================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {videoAvailable ? (
           <video
             ref={videoRef}
+            src="/videos/hero.mp4"
             autoPlay={!prefersReducedMotion}
             muted
             loop
             playsInline
-            preload="metadata"
-            poster="/videos/hero-poster.webp"
-            onError={() => setVideoAvailable(false)}
-            className="absolute inset-0 w-full h-full object-cover z-0 filter brightness-90 contrast-110"
-          >
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
+            preload="auto"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onError={(e) => {
+              console.error("Hero video failed to load:", e);
+              setVideoAvailable(false);
+            }}
+            className="absolute inset-0 w-full h-full object-cover z-0 opacity-75 filter brightness-100 contrast-110 transition-opacity duration-700"
+          />
         ) : (
           /* Three.js Neural Network fallback ONLY if video cannot be loaded */
           <NeuralCanvas />
         )}
 
-        {/* Dark Cinematic Gradient & Radial Contrast Overlays */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#050505]/75 via-[#050505]/60 to-[#050505]" />
-        <div className="absolute inset-0 z-10 bg-radial from-transparent via-[#050505]/40 to-[#050505]" />
+        {/* Dark Cinematic Gradient Overlay (Keeps text contrast high while letting video motion show clearly) */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#050505]/70 via-[#050505]/40 to-[#050505]/90 pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-radial from-transparent via-[#050505]/30 to-[#050505]/80 pointer-events-none" />
 
-        {/* Subtle grid pattern overlay */}
-        <div className="absolute inset-0 z-10 bg-grid-pattern opacity-25" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 z-10 bg-grid-pattern opacity-20 pointer-events-none" />
       </div>
 
       {/* ========================================================================= */}
