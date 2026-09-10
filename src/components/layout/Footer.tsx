@@ -41,7 +41,7 @@ export default function Footer() {
         </div>
 
         <div className="text-white/30">
-          &copy; {new Date().getFullYear()} CHINTAN CHHAJED
+          &copy; 2026 CHINTAN CHHAJED
         </div>
       </div>
     </footer>

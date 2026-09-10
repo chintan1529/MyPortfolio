@@ -47,9 +47,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${spaceGrotesk.variable} dark antialiased scroll-smooth`}
     >
-      <body className="min-h-screen flex flex-col font-sans bg-[#050505] text-[#FAFAFA]">
+      <body
+        suppressHydrationWarning
+        className="min-h-screen flex flex-col font-sans bg-[#050505] text-[#FAFAFA]"
+      >
         <SmoothScroll>
           <Preloader />
           <CustomCursor />
