@@ -4,78 +4,114 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [hoverType, setHoverType] = useState<string | null>(null);
+  const [isPointer, setIsPointer] = useState(false);
 
-  // Use MotionValues for 0-lag hardware-accelerated updates
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
 
-  // Springs for the smooth trailing ring
-  const cursorXSpring = useSpring(cursorX, { stiffness: 400, damping: 28, mass: 0.5 });
-  const cursorYSpring = useSpring(cursorY, { stiffness: 400, damping: 28, mass: 0.5 });
+  // Smooth spring for the outer ring
+  const springX = useSpring(mouseX, { stiffness: 450, damping: 30, mass: 0.5 });
+  const springY = useSpring(mouseY, { stiffness: 450, damping: 30, mass: 0.5 });
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      if (!isVisible) setIsVisible(true);
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-    };
+    // Only run on desktop with fine pointers
+    if (typeof window === "undefined") return;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest("a, button, [role='button'], input, textarea")) {
-        setIsHovering(true);
+    setMounted(true);
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+
+      // Check cursor data attribute or interactive elements
+      const target = e.target as HTMLElement | null;
+      const cursorTarget = target?.closest("[data-cursor]") as HTMLElement | null;
+      if (cursorTarget) {
+        setHoverType(cursorTarget.getAttribute("data-cursor"));
+        setIsPointer(true);
       } else {
-        setIsHovering(false);
+        const interactive = target?.closest("a, button, input, [role='button']");
+        setHoverType(null);
+        setIsPointer(!!interactive);
       }
     };
 
-    window.addEventListener("mousemove", updateMousePosition, { passive: true });
-    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    const onMouseLeave = () => {
+      mouseX.set(-100);
+      mouseY.set(-100);
+      setHoverType(null);
+      setIsPointer(false);
+    };
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.body.addEventListener("mouseleave", onMouseLeave);
 
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseleave", onMouseLeave);
     };
-  }, [cursorX, cursorY, isVisible]);
+  }, [mouseX, mouseY]);
+
+  if (!mounted) return null;
+
+  // Determine cursor text & dimensions
+  let label = "";
+  let size = isPointer ? 48 : 28;
+  if (hoverType === "project") {
+    label = "VIEW";
+    size = 68;
+  } else if (hoverType === "link") {
+    label = "OPEN";
+    size = 52;
+  } else if (hoverType === "talk") {
+    label = "TALK";
+    size = 58;
+  }
 
   return (
     <>
-      {/* Inner sharp dot (0 lag) */}
+      {/* Central micro-dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-[100] hidden md:block shadow-[0_0_10px_rgba(167,139,250,0.8)]"
+        className="fixed top-0 left-0 w-1 h-1 bg-accent rounded-full pointer-events-none z-[100] hidden md:block"
         style={{
-          x: cursorX,
-          y: cursorY,
+          x: mouseX,
+          y: mouseY,
           translateX: "-50%",
           translateY: "-50%",
-          opacity: isVisible ? 1 : 0
         }}
-        animate={{
-          scale: isHovering ? 0 : 1,
-          opacity: isHovering ? 0 : (isVisible ? 1 : 0),
-        }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
       />
 
-      {/* Outer trailing ring */}
+      {/* Outer spring ring with dynamic hover expansion and label */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-accent/60 rounded-full pointer-events-none z-[99] hidden md:block"
+        className="fixed top-0 left-0 border border-accent/60 rounded-full pointer-events-none z-[99] hidden md:flex items-center justify-center backdrop-blur-[1px]"
+        animate={{
+          width: size,
+          height: size,
+          borderColor: hoverType ? "rgba(56, 189, 248, 0.8)" : "rgba(56, 189, 248, 0.35)",
+          backgroundColor: hoverType ? "rgba(56, 189, 248, 0.08)" : "rgba(0, 0, 0, 0)",
+        }}
+        transition={{ type: "spring", stiffness: 350, damping: 25 }}
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          x: springX,
+          y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          opacity: isVisible ? 1 : 0
         }}
-        animate={{
-          scale: isHovering ? 1.8 : 1,
-          backgroundColor: isHovering ? "rgba(167, 139, 250, 0.15)" : "transparent",
-          borderColor: isHovering ? "rgba(167, 139, 250, 1)" : "rgba(167, 139, 250, 0.6)",
-        }}
-        transition={{ duration: 0.15 }}
-      />
+      >
+        {label && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-[9px] font-mono tracking-widest text-accent font-semibold uppercase"
+          >
+            {label}
+          </motion.span>
+        )}
+      </motion.div>
     </>
   );
 }

@@ -1,107 +1,130 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import NeuralCanvas from "@/components/ui/NeuralCanvas";
 import { personalInfo } from "@/lib/data";
-import { useEffect } from "react";
 
 export default function Hero() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  const backgroundGradient = useMotionTemplate`radial-gradient(circle 800px at ${springX}px ${springY}px, rgba(167, 139, 250, 0.15), transparent 80%)`;
+  const [videoAvailable, setVideoAvailable] = useState(true);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 overflow-hidden pt-20">
-      
-      {/* Awwwards-style Interactive Background */}
-      <div className="absolute inset-0 bg-[#030303] -z-20 pointer-events-none" />
-      
-      {/* Dynamic Grid Texture */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,#000_70%,transparent_100%)] -z-10 pointer-events-none" />
-      
-      {/* Interactive Spotlight */}
-      <motion.div 
-        className="absolute inset-0 -z-10 pointer-events-none"
-        style={{ background: backgroundGradient }}
-      />
-      
-      {/* Ambient static glows */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[150px] mix-blend-screen -z-10 pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      
-      {/* CSS Noise Overlay */}
-      <div className="absolute inset-0 opacity-[0.04] mix-blend-screen pointer-events-none -z-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E")' }} />
-      
-      <div className="max-w-5xl z-10">
+    <section className="relative min-h-screen w-full flex flex-col justify-between px-6 md:px-12 lg:px-20 pt-28 pb-12 overflow-hidden bg-[#050505]">
+      {/* Background layer */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        {/* Subtle radial dark gradients to anchor text contrast */}
+        <div className="absolute inset-0 bg-radial from-transparent via-[#050505]/70 to-[#050505] z-10" />
+
+        {/* Video Background (Attempts loading local file; falls back cleanly to NeuralCanvas if absent) */}
+        {videoAvailable ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/videos/hero-poster.webp"
+            onError={() => setVideoAvailable(false)}
+            className="absolute inset-0 w-full h-full object-cover opacity-35 filter brightness-90 contrast-125"
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+          </video>
+        ) : null}
+
+        {/* Three.js Neural Network Visual Depth (Active when video is absent or as ambient depth) */}
+        <NeuralCanvas />
+
+        {/* Subtle grid lines */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-40 z-0" />
+      </div>
+
+      {/* Top Metadata Row */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 z-10"
+      >
+        <div className="flex items-center gap-2 text-xs font-mono text-white/50 tracking-wider">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+          <span className="text-white/80">{personalInfo.status}</span>
+          <span className="hidden md:inline text-white/30">— {personalInfo.statusSub}</span>
+        </div>
+
+        <div className="text-xs font-mono text-white/40 tracking-widest uppercase">
+          {personalInfo.meta}
+        </div>
+      </motion.div>
+
+      {/* Hero Central Typography Composition */}
+      <div className="my-auto py-10 z-10">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="select-none"
         >
-          <h1 className="font-display text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.85] text-white uppercase drop-shadow-2xl">
-            Chintan <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent-dark drop-shadow-none">
-              Chhajed
-            </span>
+          {/* Main Name Headlines */}
+          <h1 className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] xl:text-[13rem] leading-[0.82] tracking-tighter text-white uppercase drop-shadow-2xl">
+            CHINTAN
+            <br />
+            <span className="text-white/90">CHHAJED</span>
           </h1>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 md:mt-12 max-w-2xl"
-        >
-          <p className="text-xl md:text-3xl text-white/90 font-medium font-display tracking-tight drop-shadow-md">
-            {personalInfo.role}
-          </p>
-          <p className="mt-4 text-lg md:text-xl text-white/60 leading-relaxed drop-shadow-sm">
-            {personalInfo.tagline}
-          </p>
-        </motion.div>
+          {/* Subheading & Core Specialization */}
+          <div className="mt-8 md:mt-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="max-w-xl">
+              <p className="font-display text-xl sm:text-2xl md:text-3xl text-white/95 font-medium tracking-tight">
+                AI ENGINEER &middot; BUILDING INTELLIGENT SYSTEMS
+              </p>
+              <p className="mt-2 text-sm sm:text-base font-mono text-white/50 tracking-wide">
+                Retrieval Architectures &middot; Machine Learning &middot; Full-Stack Systems
+              </p>
+            </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-12 flex flex-wrap items-center gap-6"
-        >
-          <a
-            href="#projects"
-            className="group relative px-8 py-4 bg-white text-black font-medium rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95"
-          >
-            <span className="relative z-10 transition-colors group-hover:text-white">Selected Work</span>
-            <div className="absolute inset-0 bg-accent transform scale-y-0 origin-bottom transition-transform duration-300 ease-out group-hover:scale-y-100" />
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-4 border border-white/20 rounded-full hover:border-accent hover:text-accent transition-all duration-300 font-medium bg-black/20 backdrop-blur-sm"
-          >
-            Let's Connect
-          </a>
+            {/* Action CTAs */}
+            <div className="flex items-center gap-4 shrink-0">
+              <a
+                href="#work"
+                data-cursor="project"
+                className="group relative px-7 py-3.5 bg-white text-black font-mono text-xs uppercase tracking-widest font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(255,255,255,0.2)]"
+              >
+                <span className="relative z-10 transition-colors group-hover:text-black">
+                  EXPLORE WORK &darr;
+                </span>
+                <div className="absolute inset-0 bg-accent transform scale-y-0 origin-bottom transition-transform duration-300 group-hover:scale-y-100" />
+              </a>
+
+              <a
+                href="#contact"
+                data-cursor="talk"
+                className="px-6 py-3.5 border border-white/20 text-white hover:border-accent hover:text-accent font-mono text-xs uppercase tracking-widest rounded-full transition-all duration-300 bg-white/[0.02] backdrop-blur-sm"
+              >
+                LET&apos;S TALK &rarr;
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
 
+      {/* Bottom Metadata & Scroll Prompt */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-12 left-6 md:left-12 lg:left-24"
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="flex items-center justify-between text-xs font-mono text-white/40 tracking-widest border-t border-white/[0.08] pt-4 z-10 uppercase"
       >
-        <span className="text-xs font-mono text-white/40 uppercase tracking-[0.2em]">
-          Scroll to explore
-        </span>
+        <div className="flex items-center gap-4">
+          <span>01 / 07</span>
+          <span className="hidden sm:inline text-white/20">|</span>
+          <span className="hidden sm:inline">AUTONOMOUS &middot; RETRIEVAL &middot; CIVIC AI</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span>SCROLL TO EXPLORE</span>
+          <span className="animate-bounce">&darr;</span>
+        </div>
       </motion.div>
     </section>
   );

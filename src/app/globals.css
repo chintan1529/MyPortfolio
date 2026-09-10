@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #050505; /* slightly darker than 0a0a0a for higher contrast */
+  --color-background: #050505;
   --color-foreground: #fafafa;
-  --color-accent: #a78bfa; /* Tailwind violet-400 - Passes WCAG AA on dark */
-  --color-accent-dark: #8b5cf6; /* Tailwind violet-500 */
+  --color-muted: #9ca3af;
+  --color-accent: #38bdf8;
+  --color-accent-secondary: #67e8f9;
+  --color-accent-dark: #0284c7;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
   
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -14,20 +17,81 @@
   color-scheme: dark;
 }
 
+html {
+  background-color: #050505;
+  color: #fafafa;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
-  cursor: none; /* For custom cursor */
+  cursor: none;
+  overflow-x: hidden;
 }
 
 @media (pointer: coarse) {
   body {
-    cursor: auto;
+    cursor: auto !important;
   }
 }
 
 ::selection {
   background-color: var(--color-accent);
-  color: #000;
+  color: #000000;
+}
+
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Minimal dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* Subtle grid line utility */
+.bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

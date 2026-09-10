@@ -1,100 +1,399 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { projects } from "@/lib/data";
-
-function ProjectCard({ project, index }: { project: any; index: number }) {
-  const isFlagship = index === 0;
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`group relative flex flex-col justify-between p-8 md:p-10 lg:p-12 rounded-[2rem] bg-white/[0.03] border border-white/[0.08] transition-colors hover:bg-white/[0.06] ${
-        isFlagship ? 'md:col-span-2' : ''
-      }`}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem] pointer-events-none" />
-      
-      <div className="relative z-10">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
-          <h3 className={`font-display font-bold text-foreground leading-tight ${isFlagship ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'}`}>
-            {project.title}
-          </h3>
-          <div className="flex gap-3 shrink-0">
-            {project.github && (
-              <a href={project.github} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent hover:text-black transition-all hover:scale-110 active:scale-95" aria-label="GitHub Repository">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-              </a>
-            )}
-            {project.live && (
-              <a href={project.live} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-accent text-black flex items-center justify-center hover:bg-white transition-all hover:scale-110 active:scale-95" aria-label="Live Demo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            )}
-          </div>
-        </div>
-        <p className={`text-foreground/70 mb-10 ${isFlagship ? 'text-lg md:text-xl max-w-3xl' : 'text-base md:text-lg'} leading-relaxed font-light`}>
-          {project.description}
-        </p>
-      </div>
-      
-      <div className="flex flex-wrap gap-2 mt-auto relative z-10">
-        {project.stack.map((tech: string, i: number) => (
-          <span key={i} className={`px-4 py-1.5 text-xs font-mono uppercase tracking-wider rounded-full border border-foreground/10 text-foreground/80 bg-foreground/5 ${isFlagship && i < 3 ? 'text-accent border-accent/30 bg-accent/10' : ''}`}>
-            {tech}
-          </span>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
+import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { GithubIcon } from "@/components/ui/Icons";
+import { flagshipProjects, secondaryProjects } from "@/lib/data";
 
 export default function Projects() {
-  const featuredProjects = projects.filter(p => p.featured);
+  const nhs = flagshipProjects[0];
+  const vectoria = flagshipProjects[1];
+
+  // Interactive pipeline state for Vectoria
+  const [activePipelineStep, setActivePipelineStep] = useState(2);
+
+  const PIPELINE_STEPS = [
+    { name: "USER QUERY", detail: "Natural language query ingestion & intent routing" },
+    { name: "INTENT ROUTING", detail: "Query classification & domain-specific index targeting" },
+    { name: "DENSE + BM25", detail: "Parallel FAISS vector search + BM25 inverted lexical index" },
+    { name: "RANK FUSION (RRF)", detail: "Reciprocal Rank Fusion score-invariant candidate merging" },
+    { name: "CROSS-ENCODER", detail: "Deep transformer reranker scoring context density" },
+    { name: "GROUNDED CONTEXT", detail: "Strict boundary context assembly with source citations" },
+    { name: "LLM ORCHESTRATION", detail: "Local Ollama / OpenAI streaming inference with guards" },
+    { name: "VERIFIED RESPONSE", detail: "Grounded, hallucination-mitigated response delivered" },
+  ];
 
   return (
-    <section id="projects" className="py-32 px-6 md:px-12 lg:px-24 bg-black/20">
+    <section id="work" className="relative py-32 md:py-48 px-6 md:px-12 lg:px-20 bg-[#050505] border-t border-white/[0.06] overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6"
-        >
-          <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tight">
-            Selected Work
-          </h2>
-          <p className="text-foreground/60 font-mono text-sm uppercase tracking-widest pb-2">
-            Architecture / Intelligence / Experience
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20 md:mb-32">
+          <div>
+            <div className="flex items-center gap-3 text-xs font-mono text-accent tracking-widest uppercase mb-4">
+              <span>04</span>
+              <span className="w-8 h-[1px] bg-accent/30" />
+              <span>SELECTED WORK</span>
+            </div>
+            <h2 className="font-display font-bold text-4xl sm:text-6xl md:text-7xl text-white tracking-tight">
+              ENGINEERED SYSTEMS
+            </h2>
+          </div>
+          <p className="text-xs font-mono text-white/40 uppercase tracking-widest max-w-sm md:text-right">
+            FLAGSHIP CASE STUDIES &middot; PRODUCTION ARCHITECTURES &middot; REAL CODE
           </p>
-        </motion.div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {featuredProjects.map((project, i) => (
-            <ProjectCard key={i} project={project} index={i} />
-          ))}
         </div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-20 text-center"
-        >
-          <p className="text-foreground/60 mb-6">Want to see more research and experiments?</p>
-          <a 
-            href="https://github.com/chintan1529" 
-            target="_blank" 
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 hover:border-accent hover:text-accent transition-colors font-medium"
-          >
-            View Full Archive on GitHub
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </a>
-        </motion.div>
+
+        {/* ========================================================================= */}
+        {/* FLAGSHIP 01: NEIGHBORHOOD SUSTAINABILITY HUB                             */}
+        {/* ========================================================================= */}
+        <div className="relative mb-36 p-8 sm:p-12 md:p-16 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.08] overflow-hidden">
+          {/* Subtle ambient cyan glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[140px] pointer-events-none" />
+
+          {/* Top metadata badge */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-6 mb-10">
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 text-xs font-mono font-bold text-accent bg-accent/10 border border-accent/25 rounded-md">
+                PROJECT {nhs.number}
+              </span>
+              <span className="text-xs font-mono text-white/50 tracking-wider uppercase">
+                {nhs.category}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              {nhs.live && (
+                <a
+                  href={nhs.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor="project"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-black font-mono text-xs font-semibold hover:bg-accent transition-colors"
+                >
+                  <span>LIVE PLATFORM</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
+              <a
+                href={nhs.github}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="link"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white hover:border-accent hover:text-accent font-mono text-xs transition-colors"
+              >
+                <span>GITHUB REPO</span>
+                <GithubIcon size={14} />
+              </a>
+            </div>
+          </div>
+
+          {/* Project Title & Subtitle */}
+          <div className="max-w-4xl">
+            <p className="text-xs font-mono text-accent uppercase tracking-widest mb-3">
+              {nhs.subtitle}
+            </p>
+            <h3 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-white tracking-tighter leading-[0.95] uppercase">
+              {nhs.title}
+            </h3>
+            <p className="mt-8 text-lg sm:text-xl text-white/80 font-light leading-relaxed max-w-3xl">
+              {nhs.description}
+            </p>
+          </div>
+
+          {/* Technical Engineering Scope Grid (Verified metrics, not fake business claims) */}
+          <div className="mt-14 pt-12 border-t border-white/[0.08]">
+            <p className="text-xs font-mono text-white/40 uppercase tracking-widest mb-6">
+              VERIFIED ENGINEERING SCOPE
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {nhs.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="p-5 rounded-2xl bg-[#050505] border border-white/[0.06] hover:border-accent/40 transition-colors"
+                >
+                  <div className="font-display font-bold text-2xl sm:text-3xl text-accent">
+                    {m.value}
+                  </div>
+                  <div className="mt-1 text-xs font-mono text-white font-medium">
+                    {m.label}
+                  </div>
+                  {m.detail && (
+                    <div className="mt-1 text-[10px] font-mono text-white/40 leading-snug">
+                      {m.detail}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Architectural Layers Breakdown */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {nhs.architecture.map((layer, i) => (
+              <div
+                key={layer.title}
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]"
+              >
+                <div className="flex items-center gap-3 text-xs font-mono text-accent mb-2">
+                  <span>LAYER 0{i + 1}</span>
+                  <span className="w-4 h-[1px] bg-accent/30" />
+                  <span className="text-white font-semibold font-display">{layer.title}</span>
+                </div>
+                <p className="text-sm text-white/60 font-light leading-relaxed">
+                  {layer.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Technologies */}
+          <div className="mt-10 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-mono text-white/40 mr-2 uppercase">STACK:</span>
+            {nhs.stack.map((s) => (
+              <span
+                key={s}
+                className="px-3.5 py-1 text-xs font-mono text-white/80 bg-white/5 border border-white/10 rounded-full"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* FLAGSHIP 02: VECTORIA (RETRIEVAL & GENAI PIPELINE)                       */}
+        {/* ========================================================================= */}
+        <div className="relative mb-36 p-8 sm:p-12 md:p-16 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.08] overflow-hidden">
+          {/* Subtle ambient cyan glow */}
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[140px] pointer-events-none" />
+
+          {/* Top metadata badge */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-6 mb-10">
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 text-xs font-mono font-bold text-accent bg-accent/10 border border-accent/25 rounded-md">
+                PROJECT {vectoria.number}
+              </span>
+              <span className="text-xs font-mono text-white/50 tracking-wider uppercase">
+                {vectoria.category}
+              </span>
+            </div>
+
+            <a
+              href={vectoria.github}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="link"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white hover:border-accent hover:text-accent font-mono text-xs transition-colors"
+            >
+              <span>GITHUB REPO</span>
+              <GithubIcon size={14} />
+            </a>
+          </div>
+
+          {/* Title & Subtitle */}
+          <div className="max-w-4xl">
+            <p className="text-xs font-mono text-accent uppercase tracking-widest mb-3">
+              {vectoria.subtitle}
+            </p>
+            <h3 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-white tracking-tighter leading-[0.95] uppercase">
+              {vectoria.title}
+            </h3>
+            <p className="mt-8 text-lg sm:text-xl text-white/80 font-light leading-relaxed max-w-3xl">
+              {vectoria.description}
+            </p>
+          </div>
+
+          {/* SIGNATURE INTERACTIVE RETRIEVAL PIPELINE VISUALIZATION */}
+          <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#050505] border border-white/[0.08]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+              <div>
+                <p className="text-xs font-mono text-accent uppercase tracking-widest">
+                  INTERACTIVE RETRIEVAL PIPELINE
+                </p>
+                <p className="text-xs font-mono text-white/40 mt-1">
+                  Click any stage to simulate real-time query vector flow & ranking
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-mono text-white/50">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span>STEP {activePipelineStep + 1} OF {PIPELINE_STEPS.length}</span>
+              </div>
+            </div>
+
+            {/* Pipeline Stage Buttons */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 mb-6">
+              {PIPELINE_STEPS.map((step, idx) => {
+                const isActive = activePipelineStep === idx;
+                return (
+                  <button
+                    key={step.name}
+                    onClick={() => setActivePipelineStep(idx)}
+                    data-cursor="link"
+                    className={`p-3 rounded-xl text-left transition-all duration-200 ${
+                      isActive
+                        ? "bg-accent/15 border border-accent shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+                        : "bg-white/[0.02] border border-white/[0.06] hover:border-white/20"
+                    }`}
+                  >
+                    <div className="text-[9px] font-mono text-white/40">0{idx + 1}</div>
+                    <div className="mt-1 text-xs font-display font-bold text-white tracking-tight">
+                      {step.name}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Pipeline Detail Output Box */}
+            <motion.div
+              key={activePipelineStep}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col md:flex-row md:items-center justify-between gap-4"
+            >
+              <div>
+                <span className="text-[10px] font-mono text-accent uppercase tracking-widest">
+                  ACTIVE STAGE DETAIL
+                </span>
+                <p className="text-base text-white/90 font-mono mt-1">
+                  &gt; {PIPELINE_STEPS[activePipelineStep].detail}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  onClick={() =>
+                    setActivePipelineStep((prev) => (prev > 0 ? prev - 1 : PIPELINE_STEPS.length - 1))
+                  }
+                  className="px-3 py-1 rounded bg-white/5 hover:bg-white/10 text-xs font-mono text-white/80"
+                >
+                  &larr; PREV
+                </button>
+                <button
+                  onClick={() =>
+                    setActivePipelineStep((prev) => (prev < PIPELINE_STEPS.length - 1 ? prev + 1 : 0))
+                  }
+                  className="px-3 py-1 rounded bg-accent/20 hover:bg-accent/30 text-xs font-mono text-accent"
+                >
+                  NEXT &rarr;
+                </button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Benchmark Evaluation Metric Framework */}
+          {vectoria.evaluation && (
+            <div className="mt-12 pt-8 border-t border-white/[0.08]">
+              <p className="text-xs font-mono text-white/40 uppercase tracking-widest mb-4">
+                RETRIEVAL BENCHMARK EVALUATION FRAMEWORK
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {vectoria.evaluation.map((metric) => (
+                  <div
+                    key={metric}
+                    className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center"
+                  >
+                    <span className="text-xs font-mono text-white/80">{metric}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Technologies */}
+          <div className="mt-10 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-mono text-white/40 mr-2 uppercase">STACK:</span>
+            {vectoria.stack.map((s) => (
+              <span
+                key={s}
+                className="px-3.5 py-1 text-xs font-mono text-white/80 bg-white/5 border border-white/10 rounded-full"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* SECONDARY PROJECTS (03 - 06): SOPHISTICATED EDITORIAL SHOWCASE             */}
+        {/* ========================================================================= */}
+        <div className="pt-8">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-6 mb-12">
+            <div>
+              <p className="text-xs font-mono text-accent uppercase tracking-widest">
+                MORE SPECIALIZED WORK
+              </p>
+              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white mt-1">
+                SYSTEMS &middot; REINFORCEMENT &middot; VISION
+              </h3>
+            </div>
+            <a
+              href="https://github.com/chintan1529"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="link"
+              className="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-white/50 hover:text-accent uppercase tracking-wider transition-colors"
+            >
+              <span>FULL GITHUB ARCHIVE</span>
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+
+          {/* 2x2 Grid of Secondary Projects */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {secondaryProjects.map((p) => (
+              <div
+                key={p.title}
+                className="group relative p-8 md:p-10 rounded-3xl bg-white/[0.02] border border-white/[0.06] hover:border-white/20 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-4">
+                    <span className="text-xs font-mono text-accent font-bold">
+                      PROJECT {p.number}
+                    </span>
+
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-cursor="link"
+                      className="p-2.5 rounded-full bg-white/5 text-white/70 hover:text-black hover:bg-accent transition-all duration-200"
+                      aria-label={`${p.title} GitHub`}
+                    >
+                      <GithubIcon size={16} />
+                    </a>
+                  </div>
+
+                  <h4 className="font-display font-bold text-2xl sm:text-3xl text-white group-hover:text-accent transition-colors">
+                    {p.title}
+                  </h4>
+                  <p className="text-xs font-mono text-white/40 mt-1 uppercase">
+                    {p.tagline}
+                  </p>
+
+                  <p className="mt-5 text-sm text-white/70 font-light leading-relaxed">
+                    {p.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-wrap gap-2">
+                  {p.stack.map((s) => (
+                    <span
+                      key={s}
+                      className="px-2.5 py-1 text-[10px] font-mono text-white/60 bg-white/5 border border-white/[0.08] rounded-md"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

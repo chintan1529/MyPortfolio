@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/layout/SmoothScroll";
+import CustomCursor from "@/components/ui/CustomCursor";
+import Navbar from "@/components/layout/Navbar";
+import Preloader from "@/components/layout/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,12 +17,25 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Chintan Chhajed | Full-Stack & AI Engineer",
-  description: "Portfolio of Chintan Chhajed, Full-Stack Developer & AI/ML Specialist building products that are both intelligent and beautiful.",
+  title: "Chintan Chhajed — AI Engineer",
+  description:
+    "AI Engineer building intelligent systems across machine learning, RAG, computer vision, backend engineering, and full-stack AI.",
   openGraph: {
-    title: "Chintan Chhajed | Full-Stack & AI Engineer",
-    description: "Portfolio of Chintan Chhajed, Full-Stack Developer & AI/ML Specialist building products that are both intelligent and beautiful.",
+    title: "Chintan Chhajed — AI Engineer",
+    description:
+      "AI Engineer building intelligent systems across machine learning, RAG, computer vision, backend engineering, and full-stack AI.",
+    url: "https://my-portfolio-murex-two-94.vercel.app",
+    siteName: "Chintan Chhajed Portfolio",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chintan Chhajed — AI Engineer",
+    description:
+      "AI Engineer building intelligent systems across machine learning, RAG, computer vision, backend engineering, and full-stack AI.",
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -28,9 +45,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} dark antialiased scroll-smooth`}>
-      <body className="min-h-screen flex flex-col font-sans">
-        {children}
+    <html
+      lang="en"
+      className={`${inter.variable} ${spaceGrotesk.variable} dark antialiased scroll-smooth`}
+    >
+      <body className="min-h-screen flex flex-col font-sans bg-[#050505] text-[#FAFAFA]">
+        <SmoothScroll>
+          <Preloader />
+          <CustomCursor />
+          <Navbar />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
