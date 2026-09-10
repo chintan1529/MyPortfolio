@@ -1,50 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import NeuralCanvas from "@/components/ui/NeuralCanvas";
 import { personalInfo } from "@/lib/data";
 
 export default function Hero() {
   const [videoAvailable, setVideoAvailable] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Detect prefers-reduced-motion on mount to avoid hydration mismatch
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(motionQuery.matches);
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    motionQuery.addEventListener("change", handleMotionChange);
+    return () => motionQuery.removeEventListener("change", handleMotionChange);
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (prefersReducedMotion) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play().catch(() => {
+          // Autoplay gracefully handled if browser policy restricts
+        });
+      }
+    }
+  }, [prefersReducedMotion]);
 
   return (
     <section className="relative min-h-screen w-full flex flex-col justify-between px-6 md:px-12 lg:px-20 pt-28 pb-12 overflow-hidden bg-[#050505]">
-      {/* Background layer */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Subtle radial dark gradients to anchor text contrast */}
-        <div className="absolute inset-0 bg-radial from-transparent via-[#050505]/70 to-[#050505] z-10" />
-
-        {/* Video Background (Attempts loading local file; falls back cleanly to NeuralCanvas if absent) */}
+      {/* ========================================================================= */}
+      {/* BACKGROUND LAYER (Full-viewport video with dark overlay)                 */}
+      {/* ========================================================================= */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {videoAvailable ? (
           <video
-            autoPlay
+            ref={videoRef}
+            autoPlay={!prefersReducedMotion}
             muted
             loop
             playsInline
             preload="metadata"
             poster="/videos/hero-poster.webp"
             onError={() => setVideoAvailable(false)}
-            className="absolute inset-0 w-full h-full object-cover opacity-35 filter brightness-90 contrast-125"
+            className="absolute inset-0 w-full h-full object-cover z-0 filter brightness-90 contrast-110"
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
-            <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
           </video>
-        ) : null}
+        ) : (
+          /* Three.js Neural Network fallback ONLY if video cannot be loaded */
+          <NeuralCanvas />
+        )}
 
-        {/* Three.js Neural Network Visual Depth (Active when video is absent or as ambient depth) */}
-        <NeuralCanvas />
+        {/* Dark Cinematic Gradient & Radial Contrast Overlays */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#050505]/75 via-[#050505]/60 to-[#050505]" />
+        <div className="absolute inset-0 z-10 bg-radial from-transparent via-[#050505]/40 to-[#050505]" />
 
-        {/* Subtle grid lines */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-40 z-0" />
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 z-10 bg-grid-pattern opacity-25" />
       </div>
+
+      {/* ========================================================================= */}
+      {/* HERO CONTENT (Z-Index 20: Positioned strictly ABOVE overlay & video)       */}
+      {/* ========================================================================= */}
 
       {/* Top Metadata Row */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 z-10"
+        className="relative z-20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4"
       >
         <div className="flex items-center gap-2 text-xs font-mono text-white/50 tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
@@ -58,9 +91,9 @@ export default function Hero() {
       </motion.div>
 
       {/* Hero Central Typography Composition */}
-      <div className="my-auto py-10 z-10">
+      <div className="relative z-20 my-auto py-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="select-none"
@@ -110,10 +143,10 @@ export default function Hero() {
 
       {/* Bottom Metadata & Scroll Prompt */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
-        className="flex items-center justify-between text-xs font-mono text-white/40 tracking-widest border-t border-white/[0.08] pt-4 z-10 uppercase"
+        className="relative z-20 flex items-center justify-between text-xs font-mono text-white/40 tracking-widest border-t border-white/[0.08] pt-4 uppercase"
       >
         <div className="flex items-center gap-4">
           <span>01 / 07</span>
