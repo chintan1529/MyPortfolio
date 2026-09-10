@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #050505; /* slightly darker than 0a0a0a for higher contrast */
+  --color-foreground: #fafafa;
+  --color-accent: #a78bfa; /* Tailwind violet-400 - Passes WCAG AA on dark */
+  --color-accent-dark: #8b5cf6; /* Tailwind violet-500 */
+  
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  cursor: none; /* For custom cursor */
+}
+
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: #000;
+}

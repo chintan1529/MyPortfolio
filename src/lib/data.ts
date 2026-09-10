@@ -1,0 +1,121 @@
+export const projects = [
+  {
+    title: "Neighborhood Sustainability Hub",
+    description: "AI-powered smart city platform for waste intelligence, civic reporting, and community-driven sustainability. Features an AI Waste Reporter, route optimizer for collectors, and real-time predictive risk mapping.",
+    stack: ["Next.js", "TypeScript", "Supabase", "Hugging Face API", "Leaflet"],
+    github: "https://github.com/chintan1529/neighborhood-sustainability-hub",
+    live: "https://neighborhood-sustainability-hub.vercel.app",
+    featured: true,
+  },
+  {
+    title: "Vectoria",
+    description: "A Python-based project focusing on vector operations and representation architectures.",
+    stack: ["Python"],
+    github: "https://github.com/chintan1529/Vectoria",
+    featured: true,
+  },
+  {
+    title: "Autonomous Neural Network Compression",
+    description: "Production-grade AI system that autonomously learns, compresses, evaluates, and recommends optimal neural network configurations using agent-based reasoning and RAG. Achieves up to 99.6% structural sparsity.",
+    stack: ["Python", "PyTorch", "FastAPI", "FAISS", "RAG"],
+    github: "https://github.com/chintan1529/Autonomous-Neural-Network-Compression-System",
+    featured: true,
+  },
+  {
+    title: "AI Stock Intelligence",
+    description: "AI-powered financial intelligence platform for Indian equities using RAG, sentiment analysis, and LLMs.",
+    stack: ["Python", "RAG", "LLMs", "Sentiment Analysis"],
+    github: "https://github.com/chintan1529/ai-stock-intelligence",
+    featured: true,
+  },
+  {
+    title: "Enhanced YOLOv8s Object Detection",
+    description: "Professional-grade real-time object detection with 85–95% accuracy and 40–70% performance improvement via multi-scale detection. Includes a Gradio web interface.",
+    stack: ["YOLOv8", "PyTorch", "Gradio", "Computer Vision"],
+    github: "https://github.com/chintan1529/Enhanced-YOLOv8s-Object-Detection-System",
+    featured: true,
+  },
+  {
+    title: "NextStep — Off-Campus Job Portal",
+    description: "Full-stack job application tracking platform built for unplaced students to discover off-campus opportunities. Features secure auth via Supabase, real-time tracking, and peer support systems.",
+    stack: ["Next.js", "React", "TypeScript", "Supabase", "TailwindCSS", "Vercel"],
+    github: "https://github.com/chintan1529/NextStep-Job-Portal",
+    featured: false,
+  },
+  {
+    title: "Sentiment-Aware Trader Intelligence",
+    description: "Trading-focused intelligence system combining sentiment signals with market analysis.",
+    stack: ["Python", "Jupyter", "Machine Learning"],
+    github: "https://github.com/chintan1529/Sentiment-Aware-Trader-Intelligence-System",
+    featured: false,
+  },
+  {
+    title: "Mental Health Chatbot",
+    description: "AI-powered psychological support system using advanced NLP and Transformers for compassionate, intelligent conversation.",
+    stack: ["Python", "PyTorch", "Transformers", "NLP"],
+    github: "https://github.com/chintan1529/Mental-HealthBot",
+    featured: false,
+  },
+  {
+    title: "SobberConnect",
+    description: "Recovery support platform with AI-powered guidance — community-driven addiction recovery assistance and resources.",
+    stack: ["Python", "Flask", "AI", "Web Dev"],
+    github: "https://github.com/chintan1529",
+    featured: false,
+  },
+  {
+    title: "Lidar-Nav-PPO",
+    description: "Reinforcement learning navigation project using LiDAR input and PPO (Proximal Policy Optimization).",
+    stack: ["Python", "Jupyter", "Reinforcement Learning"],
+    github: "https://github.com/chintan1529/Lidar-Nav-PPO",
+    featured: false,
+  },
+  {
+    title: "Brain Tumor MRI Detection",
+    description: "Deep learning CNN model for detecting brain tumors in MRI scans with high precision.",
+    stack: ["TensorFlow", "CNN", "Medical Imaging"],
+    github: "https://github.com/chintan1529/Brain-Tumor-mri-prediction-",
+    featured: false,
+  },
+  {
+    title: "Diabetic Retinopathy Detection",
+    description: "Computer vision system for early detection of diabetic retinopathy in retinal images.",
+    stack: ["CNN", "Computer Vision", "Medical Imaging"],
+    github: "https://github.com/chintan1529/-Diabetic-Retinopathy-Detection",
+    featured: false,
+  },
+  {
+    title: "Weather Forecast App",
+    description: "Real-time weather app with global coverage, dynamic updates, and data visualization.",
+    stack: ["Flask", "OpenWeather API", "JavaScript"],
+    github: "https://github.com/chintan1529/Weather-forecast-app",
+    featured: false,
+  },
+  {
+    title: "CIFAR-10 Classification",
+    description: "CNN trained to classify 10 object categories as an architecture and optimization demonstration.",
+    stack: ["PyTorch", "CNN", "Deep Learning"],
+    github: "https://github.com/chintan1529/cifar10-classification",
+    featured: false,
+  }
+];
+
+export const skills = {
+  frontend: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "TailwindCSS"],
+  backend: ["Python", "Flask", "Django", "FastAPI", "Node.js", "Express", "REST APIs"],
+  aiMl: ["PyTorch", "TensorFlow", "YOLOv8", "Transformers", "NLP", "CNNs", "RAG", "LLMs"],
+  dataDb: ["PostgreSQL", "MongoDB", "MySQL", "Supabase"],
+  toolsCloud: ["Git", "Docker", "Jupyter", "Vercel", "AWS"],
+};
+
+export const personalInfo = {
+  name: "Chintan Chhajed",
+  role: "Full-Stack Developer & AI/ML Specialist",
+  tagline: "Building products that are both intelligent and beautiful.",
+  education: "SRM University, Chennai",
+  location: "Chennai, India",
+  email: "chintanchhajed@gmail.com",
+  github: "https://github.com/chintan1529",
+  linkedin: "https://www.linkedin.com/in/chintan-chhajed-339b86294",
+  openFor: ["AI/ML collaborations & research", "Internships (AI/ML + full-stack)", "Mental-health-tech work", "Computer vision & deep learning projects"],
+};
