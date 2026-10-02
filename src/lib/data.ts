@@ -239,6 +239,40 @@ export const skillsData = {
   },
 };
 
+export interface AwsCertification {
+  number: string;
+  name: string;
+  badgeCode: string;
+  issuer: string;
+  issueDate: string;
+  expirationDate: string;
+  credentialId: string;
+  verificationUrl: string;
+}
+
+export const awsCertifications: AwsCertification[] = [
+  {
+    number: "01",
+    name: "AWS Certified AI Practitioner",
+    badgeCode: "AIF",
+    issuer: "Amazon Web Services (AWS)",
+    issueDate: "September 11, 2026",
+    expirationDate: "September 11, 2029",
+    credentialId: "d22f95773f7f4ffbb1bb95d3c0340514",
+    verificationUrl: "https://aws.amazon.com/verification",
+  },
+  {
+    number: "02",
+    name: "AWS Certified Cloud Practitioner",
+    badgeCode: "CLF",
+    issuer: "Amazon Web Services (AWS)",
+    issueDate: "September 13, 2026",
+    expirationDate: "September 13, 2029",
+    credentialId: "21be36e66f1f4e54b7c5e9436ea5d63e",
+    verificationUrl: "https://aws.amazon.com/verification",
+  },
+];
+
 export const achievementsData = {
   cgpa: "9.39",
   cgpaMax: "10.0",
@@ -246,6 +280,7 @@ export const achievementsData = {
     { title: "1st Runner-Up", event: "HACKRUSH 1.0" },
     { title: "Top 10 Finalist", event: "SEISMO HACK 1.0" },
   ],
+  awsCertifications,
   certifications: [
     "MongoDB Certified Associate Developer",
     "SAP Generative AI Developer",
@@ -255,3 +290,4 @@ export const achievementsData = {
     "ZTCA Certification",
   ],
 };
+
